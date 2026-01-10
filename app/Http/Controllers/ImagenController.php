@@ -26,7 +26,6 @@ class ImagenController extends Controller
         $imagenServidor = $manager->read($imagen);
         $imagenServidor->cover(1000, 1000);
 
-        // Guardar usando Storage (en storage/app/public/posts/{user_id}/)
         Storage::disk('public')->put($rutaRelativa, $imagenServidor->toJpeg());
 
         return response()->json(['imagen' => $rutaRelativa]);
