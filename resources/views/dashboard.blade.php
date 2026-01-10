@@ -10,7 +10,7 @@
             <div class="md:w-8/12 lg:w-6/12 px-5">
                 <img src="{{ 
                     $user->imagen ? 
-                    asset('perfiles') . '/' . $user->imagen : 
+                    asset('storage/' . $user->imagen) : 
                     asset('img/usuario.svg') }}"
                     alt="imagen usuario"/>
             </div>
