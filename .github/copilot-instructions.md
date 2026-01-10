@@ -95,39 +95,51 @@ user() → belongsTo(User::class)
 
 ## Sistema de Almacenamiento de Imágenes
 
+Usa el sistema estándar de Laravel Storage con symlink (`storage:link`).
+
+### Estructura de Directorios
+```
+storage/app/public/
+├── posts/{user_id}/          # Imágenes de publicaciones
+│   └── {imagen}.jpg
+└── perfiles/{user_id}/       # Imágenes de perfil
+    └── {imagen}.jpg
+```
+
 ### Flujo de Subida de Imágenes de Posts
 1. **Frontend**: Dropzone.js captura la imagen en `/resources/js/app.js`
 2. **Subida AJAX**: POST a `/imagenes` → `ImagenController@store`
 3. **Procesamiento**:
    ```php
-   $manager = new ImageManager(new Driver());  // GD Driver
+   $manager = new ImageManager(new Driver());
    $imagenServidor = $manager->read($imagen);
-   $imagenServidor->cover(1000, 1000);         // Redimensiona a cuadrado
-   $imagenServidor->save(public_path('uploads/' . $nombreImagen));
+   $imagenServidor->cover(1000, 1000);
+   
+   $rutaRelativa = "posts/{$userId}/{$nombreImagen}";
+   Storage::disk('public')->put($rutaRelativa, $imagenServidor->toJpeg());
    ```
-4. **Respuesta**: JSON con nombre de imagen → se guarda en input hidden
-5. **Guardado**: Al crear el post, solo se guarda el nombre del archivo
+4. **Respuesta**: JSON con ruta relativa (`posts/1/abc123.jpg`)
+5. **En vistas**: `asset('storage/' . $post->imagen)`
 
 ### Flujo de Imágenes de Perfil
 Procesado en `PerfilController@store`:
 ```php
-$imagenServidor->cover(1000, 1000);
-$imagenServidor->save(public_path('perfiles') . '/' . $nombreImagen);
+$rutaImagen = "perfiles/{$userId}/{$nombreImagen}";
+Storage::disk('public')->put($rutaImagen, $imagenServidor->toJpeg());
 ```
 
-### Ubicaciones de Almacenamiento
-| Tipo | Directorio | Acceso |
-|------|------------|--------|
-| Posts | `/public/uploads/` | `asset('uploads/' . $post->imagen)` |
-| Perfiles | `/public/perfiles/` | `asset('perfiles/' . $user->imagen)` |
-
 ### Eliminación de Imágenes
-Al eliminar un post en `PostController@destroy`:
 ```php
-$imagen_path = public_path('uploads/' . $post->imagen);
-if(File::exists($imagen_path)) {
-    unlink($imagen_path);
-}
+Storage::disk('public')->delete($post->imagen);
+```
+
+### Acceso en Vistas
+```blade
+{{-- Posts --}}
+<img src="{{ asset('storage/' . $post->imagen) }}">
+
+{{-- Perfiles --}}
+<img src="{{ asset('storage/' . $user->imagen) }}">
 ```
 
 ---
