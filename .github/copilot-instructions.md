@@ -210,5 +210,5 @@ composer test
 | `app/Livewire/` | Componentes interactivos |
 | `app/Policies/` | Lógica de autorización |
 | `resources/views/layouts/app.blade.php` | Layout principal |
-| `public/uploads/` | Imágenes de posts |
-| `public/perfiles/` | Imágenes de perfil |
+| `storage/app/public/posts/{user_id}/` | Imágenes de posts por usuario |
+| `storage/app/public/perfiles/{user_id}/` | Imágenes de perfil por usuario |
