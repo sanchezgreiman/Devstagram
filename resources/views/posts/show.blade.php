@@ -19,7 +19,7 @@
             </div>
 
             <div class="p-3">
-                <p class="font-bold">{{ $post->user->username }}</p>
+                <a href="{{ route('posts.index', $user->username) }}" class="font-bold">{{ $post->user->username }}</a>
                 <p class="text-sm text-gray-500">{{ $post->created_at->diffForHumans() }}</p>
                 <p class="mt-5">{{ $post->descripcion }}</p>
             </div>
