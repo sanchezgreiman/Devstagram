@@ -19,6 +19,44 @@
                 </a>
 
                 @auth
+                <div class="relative">
+                    <input type="text" id="busqueda" placeholder="Buscar usuarios..." class="border-2 p-2 w-full">
+                        
+                    <ul id="resultados" class="absolute bg-white w-full border mt-1 hidden shadow-lg z-50">
+                    </ul>
+                    </div>
+                        <script>
+                            const input = document.querySelector('#busqueda');
+                            const resultadosUl = document.querySelector('#resultados');
+
+                            input.addEventListener('input', async (e) => {
+                                const query = e.target.value;
+
+                                if (query.length < 2) {
+                                    resultadosUl.classList.add('hidden');
+                                    return;
+                                }
+
+                                // Llamamos a nuestra ruta de Laravel
+                                const response = await fetch(`/buscar?query=${query}`);
+                                const usuarios = await response.json();
+
+                                // Limpiamos y mostramos resultados
+                                resultadosUl.innerHTML = '';
+                                if (usuarios.length > 0) {
+                                    usuarios.forEach(user => {
+                                        const li = document.createElement('li');
+                                        li.className = 'p-2 hover:bg-gray-100 cursor-pointer';
+                                        li.innerHTML = `<a href="/${user.username}" class="block w-full h-full p-2">${user.username}</a>`;
+                                        resultadosUl.appendChild(li);
+                                    });
+                                    resultadosUl.classList.remove('hidden');
+                                } else {
+                                    resultadosUl.classList.add('hidden');
+                                }
+                            });
+                        </script>
+
                     <nav class="flex gap-2 items-center">
                         <a
                             class="flex items-center gap-2 bg-white border p-2 text-gray-600
