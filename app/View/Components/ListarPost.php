@@ -9,10 +9,13 @@ use Illuminate\View\Component;
 class ListarPost extends Component
 {
     public $posts;
+    public $user;
 
-    public function __construct($posts)
+    public function __construct($posts, $user = null)
     {
         $this->posts = $posts;
+        $this->user = $user;
+
     }
 
     /**

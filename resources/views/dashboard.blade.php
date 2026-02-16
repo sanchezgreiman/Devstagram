@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('titulo')
-    Perfil: {{$user->username}}
+        {{$user->name}}
 @endsection
 
 @section('contenido')
@@ -91,7 +91,7 @@
   
     <section class="container mx-auto mt-10">
         <h2 class="text-4xl text-center font-black my-10">Publicaciones</h2>
-        <x-listar-post :posts="$posts" />
+        <x-listar-post :posts="$posts" :user="$user"/>
     </section>    
     
 @endsection
