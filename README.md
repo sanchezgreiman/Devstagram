@@ -15,6 +15,7 @@ Plataforma social tipo Instagram construida con Laravel 12, Livewire 3 y Tailwin
     <td><img src="./img/post.png" width="300"/></td>
     <td><img src="./img/profile.png" width="300"/></td>
   </tr>
+    <td><img src="./img/edit-profile.png" width="300"/></td>
 </table>
 
 ## Requisitos
