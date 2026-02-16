@@ -6,8 +6,10 @@
 
 @section('contenido')
     <div class="container mx-auto md:flex">
-        <div class="md:w-1/2">
-            <img src="{{ asset('storage/' . $post->imagen) }}" alt="Imagen del post {{ $post->titulo }}">  
+        <div class="md:w-6/12 max-w-lg p-5">
+            <img src="{{ asset('storage/' . $post->imagen) }}" 
+            alt="Imagen del post {{ $post->titulo }}" 
+            class="rounded-lg shadow-md w-full object-cover">  
         
             <div class="p-3 flex items-center gap-4">
                 @auth
@@ -41,7 +43,7 @@
 
         </div>
 
-        <div class="md:w-1/2 p-5">
+        <div class="md:w-6/12 p-5">
 
             <div class="shadow bg-white p-5 mb-5">
 
