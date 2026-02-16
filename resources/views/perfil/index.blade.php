@@ -31,18 +31,37 @@
                 </div>
                 
                 <div class="mb-5">
-                    <label for="imagen" class="mb-2 block uppercase text-gray-500 font-bold">
+                    <label class="mb-2 block uppercase text-gray-500 font-bold">
                         Imagen Perfil
                     </label>
-                    <input
-                        id="imagen"
-                        name="imagen"
-                        type="file"
-                        class="border p-3 w-full rounded-lg"
-                        value=""
-                        accept=".jpg, .jpeg, .png"
-                    />   
-                </div>
+
+                    <label class="cursor-pointer bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg inline-block">
+                        Seleccionar Imagen
+                        <input
+                            id="imagen"
+                            name="imagen"
+                            type="file"
+                            class="hidden"
+                            accept=".jpg,.jpeg,.png"
+                        >
+                    </label>
+
+                    <p id="nombreArchivo" class="mt-2 text-sm text-gray-500"></p>
+                    </div>
+
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const input = document.getElementById('imagen');
+                        const texto = document.getElementById('nombreArchivo');
+
+                        input.addEventListener('change', function(e) {
+                            if (e.target.files.length > 0) {
+                                texto.textContent = e.target.files[0].name;
+                            }
+                        });
+                    });
+                    </script>
+
 
                 <input 
                     type="submit"
